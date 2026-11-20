@@ -1,162 +1,348 @@
 <!DOCTYPE html>
-<!-- oss-template-2026:placeholder （この目印で，scripts/check.sh が「準備中」のページかどうかを見分けます） -->
-<!--
-  テンプレートの「準備中」のページです．
-  このページが https://ユーザー名.github.io/ に表示されたら，GitHub Pages の設定は成功です．
-  第7回の実習4で，このファイルを第6回で作った index.html に置きかえます．
--->
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>準備中</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="情報工学科3年生・澤枝琉星のプロフィール。趣味、プログラミング経験、この授業で学びたいことを紹介します。">
+  <title>澤枝琉星 | ポートフォリオ</title>
+
   <style>
-    /* ===== 色の設定 ===== */
+    /* 黒を基調に、背景と文字の明暗差が強すぎない落ち着いた配色にする */
     :root {
-      --main-color: #2e7d32;  /* メインの色（見出し・番号） */
-      --bg-color: #f5f8f5;    /* ページの背景の色 */
-      --card-color: #ffffff;  /* カードの背景の色 */
-      --text-color: #222222;  /* 文字の色 */
-      --sub-color: #666666;   /* 補足の文字の色 */
-      --line-color: #dfe6df;  /* 区切り線の色 */
+      --background: #161817;
+      --surface: #1e211f;
+      --text: #e6e8e3;
+      --muted: #afb6ae;
+      --accent: #bccdb4;
+      --border: #393f39;
+      --radius: 22px;
     }
 
-    /* パソコンやスマートフォンがダークモードのときの色 */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --main-color: #81c784;
-        --bg-color: #121512;
-        --card-color: #1e231e;
-        --text-color: #e8ece8;
-        --sub-color: #a0a8a0;
-        --line-color: #2f362f;
-      }
+    /* 余白や枠線を含めたサイズ計算に統一する */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
 
-    /* ページ全体：カードを画面のまんなかに置く */
+    html {
+      scroll-padding-top: 24px;
+    }
+
     body {
       margin: 0;
-      min-height: 100vh;
+      background: var(--background);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
+        "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+    }
+
+    /* 見出しと本文の初期余白を整える */
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+      text-underline-offset: 5px;
+    }
+
+    /* キーボード操作時に現在のリンク位置を見つけやすくする */
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 6px;
+      border-radius: 4px;
+    }
+
+    /* 大きな画面でも本文が横に広がりすぎないようにする */
+    .container {
+      width: min(100% - 48px, 960px);
+      margin-inline: auto;
+    }
+
+    /* ページ上部にサイト名と各セクションへのリンクを配置する */
+    .site-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      box-sizing: border-box;
-      font-family: "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
-      line-height: 1.8;
-      color: var(--text-color);
-      background: var(--bg-color);
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px 32px;
+      padding-block: 28px;
+      border-bottom: 1px solid var(--border);
     }
 
-    /* まんなかのカード */
-    main {
-      width: 100%;
-      max-width: 600px;
-      padding: 32px 28px;
-      background: var(--card-color);
-      border-top: 6px solid var(--main-color);
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    .site-title {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
     }
 
-    h1 {
-      margin: 0 0 4px;
-      font-size: clamp(1.3rem, 6vw, 1.6rem);  /* スマートフォンでは少し小さくする */
-      line-height: 1.4;
-      color: var(--main-color);
+    .navigation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .navigation a {
+      display: inline-block;
+      padding-block: 6px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+
+    .navigation a:hover {
+      color: var(--text);
+      text-decoration: underline;
+    }
+
+    /* 最初にキャッチコピーと基本情報をゆったり見せる */
+    .hero {
+      padding-block: clamp(64px, 11vw, 112px);
+    }
+
+    .eyebrow {
+      margin-bottom: 20px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+    }
+
+    .catchphrase {
+      margin-bottom: 32px;
+      font-size: clamp(1.7rem, 5.6vw, 3.2rem);
+      font-weight: 500;
+      line-height: 1.6;
+      letter-spacing: 0.04em;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      font-weight: 500;
+      letter-spacing: 0.14em;
+    }
+
+    .affiliation {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* 趣味とプログラミング経験は、横幅に応じて並ぶカードにする */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: clamp(24px, 4vw, 36px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .section-label {
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
     }
 
     h2 {
-      margin: 28px 0 8px;
-      padding-bottom: 4px;
-      font-size: 1.05rem;
-      border-bottom: 1px solid var(--line-color);
+      margin-bottom: 24px;
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
     }
 
-    /* 「設定は成功」のバッジ */
-    .badge {
-      display: inline-block;
-      margin: 8px 0 0;
-      padding: 2px 12px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      color: var(--card-color);
-      background: var(--main-color);
-      border-radius: 999px;
-    }
-
-    /* 「次にやること」の番号つきリスト */
-    ol {
+    /* 趣味は行ごとに区切り、簡潔で読みやすいリストにする */
+    .hobby-list {
       margin: 0;
-      padding-left: 1.4em;
-    }
-    li {
-      margin-bottom: 6px;
-    }
-    li::marker {
-      font-weight: bold;
-      color: var(--main-color);
+      padding: 0;
+      list-style: none;
     }
 
-    /* コマンドの見た目 */
-    code {
-      padding: 1px 6px;
-      font-family: "SFMono-Regular", Consolas, monospace;
-      font-size: 0.88em;
-      background: var(--bg-color);
-      border-radius: 4px;
-      white-space: nowrap;  /* コマンドの途中で折り返さない */
+    .hobby-list li {
+      padding-block: 12px;
+      border-bottom: 1px solid var(--border);
     }
 
-    /* 補足の小さな文字 */
-    .sub {
+    .hobby-list li:first-child {
+      padding-top: 0;
+    }
+
+    .hobby-list li:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    /* 使用経験のある言語だけを表示し、習熟度は付け加えない */
+    .language-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .language-list li {
+      padding: 7px 18px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    /* 学びたいことは横長のセクションとして分ける */
+    .learning {
+      margin-top: 20px;
+    }
+
+    .learning h2 {
+      margin-bottom: 16px;
+    }
+
+    .learning-text {
+      color: var(--muted);
+    }
+
+    /* 最後のひとことは余白を多めに取り、静かな締めくくりにする */
+    .message {
+      padding-block: clamp(64px, 10vw, 96px);
+      text-align: center;
+    }
+
+    .message h2 {
+      margin-bottom: 20px;
+      color: var(--muted);
       font-size: 0.9rem;
-      color: var(--sub-color);
     }
 
-    /* いちばん下の小さな文字 */
-    footer {
-      margin-top: 28px;
-      padding-top: 12px;
-      font-size: 0.8rem;
-      color: var(--sub-color);
-      border-top: 1px solid var(--line-color);
+    .message p {
+      font-size: clamp(1rem, 2.8vw, 1.2rem);
+      line-height: 2.2;
     }
-    a {
-      color: var(--main-color);
+
+    .message p + p {
+      margin-top: 8px;
+    }
+
+    .site-footer {
+      padding-block: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* スマートフォンではカードを縦並びにし、左右の余白を調整する */
+    @media (max-width: 640px) {
+      .container {
+        width: calc(100% - 36px);
+      }
+
+      .site-header {
+        align-items: flex-start;
+        padding-block: 22px;
+      }
+
+      .navigation {
+        gap: 6px 20px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .learning {
+        margin-top: 16px;
+      }
+
+      .catchphrase {
+        letter-spacing: 0.02em;
+      }
     }
   </style>
 </head>
+
 <body>
-  <main>
-    <h1>このサイトは準備中です</h1>
-    <p class="badge">GitHub Pages の設定 OK</p>
-    <p>このページが表示されていれば，あなたのリポジトリは正しく公開されています．
-      あとは，このページを自分のサイトに置きかえるだけです．</p>
+  <div class="container">
+    <!-- サイト名と、ページ内を移動するためのナビゲーション -->
+    <header class="site-header">
+      <p class="site-title">aro'S PORTFOLIO</p>
+      <nav aria-label="ページ内ナビゲーション">
+        <ul class="navigation">
+          <li><a href="#about">自己紹介</a></li>
+          <li><a href="#interests">好きなこと</a></li>
+          <li><a href="#learning">学びたいこと</a></li>
+        </ul>
+      </nav>
+    </header>
 
-    <h2>次にやること</h2>
-    <ol>
-      <li>このリポジトリを，SSHのURLで <code>git clone</code> する</li>
-      <li><code>index.html</code> を，第6回で作ったサイトに置きかえる</li>
-      <li><code>bash scripts/check.sh</code> で，公開前のチェックをする</li>
-      <li><code>git add</code> → <code>git commit</code> → <code>git push origin main</code> する</li>
-      <li>数分待ってから，このページを再読み込みする</li>
-    </ol>
-    <p class="sub">再読み込みしても変わらないときは，強制再読み込み（Windows：Ctrl + F5，Mac：Command + Shift + R）を試しましょう．</p>
+    <main>
+      <!-- 自己紹介にあるキャッチコピー、名前、所属、学年 -->
+      <section class="hero" id="about" aria-labelledby="profile-name">
+        <p class="eyebrow">MY PROFILE</p>
+        <p class="catchphrase">休日は昼過ぎまで<br>寝てます</p>
+        <h1 id="profile-name">aro</h1>
+        <p class="affiliation">情報工学科 / 3年生</p>
+      </section>
 
-    <h2>公開する前に</h2>
-    <ul>
-      <li>本名のフルネーム・学籍番号・住所・電話番号・メールアドレスが入っていないか</li>
-      <li>自己紹介に書いていないことを，AIが付け足していないか</li>
-    </ul>
-    <p class="sub">このリポジトリは Public です．サイトだけでなく，ファイルの中身やコミットの履歴も，誰でも見ることができます．</p>
+      <div class="card-grid">
+        <!-- 趣味・好きなことをそのまま紹介する -->
+        <section class="card" id="interests" aria-labelledby="interests-title">
+          <p class="section-label">FAVORITES</p>
+          <h2 id="interests-title">趣味・好きなこと</h2>
+          <ul class="hobby-list">
+            <li>ゲーム</li>
+            <li>サウナ</li>
+            <li>音楽を聞く</li>
+          </ul>
+        </section>
 
-    <footer>
-      拓殖大学工学部『オープンソースソフトウェア』2026年度<br>
-      <a href="https://github.com/tomohitoy/oss-practice-2026/blob/main-07/chap07/README.md">第7回の資料</a>
-      ・
-      <a href="https://github.com/tomohitoy/oss-template-2026">テンプレート（tomohitoy/oss-template-2026）</a>
+        <!-- プログラミング経験に挙げられている言語を表示する -->
+        <section class="card" aria-labelledby="programming-title">
+          <p class="section-label">PROGRAMMING</p>
+          <h2 id="programming-title">プログラミング経験</h2>
+          <ul class="language-list">
+            <li>Java</li>
+            <li>C言語</li>
+            <li>Python</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- この授業で学びたい内容 -->
+      <section class="card learning" id="learning" aria-labelledby="learning-title">
+        <p class="section-label">LEARNING</p>
+        <h2 id="learning-title">この授業で学びたいこと</h2>
+        <p class="learning-text">OSSの使い方や内容理解</p>
+      </section>
+
+      <!-- 自己紹介の「ひとこと」を掲載する -->
+      <section class="message" aria-labelledby="message-title">
+        <h2 id="message-title">ひとこと</h2>
+        <p>B'zの曲が一番好きです。</p>
+        <p>のんびり自分のペースで<br>生きる事が大事！</p>
+      </section>
+    </main>
+
+    <!-- ページ下部の名前表記 -->
+    <footer class="site-footer">
+      <p>aro / PORTFOLIO</p>
     </footer>
-  </main>
+  </div>
 </body>
 </html>
